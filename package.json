@@ -1,0 +1,9 @@
+{
+  "name": "digital-banking-monorepo",
+  "private": true,
+  "scripts": {
+    "build": "cd frontend && npm ci && npm run build",
+    "start": "cd backend && npm ci && npm start",
+    "postinstall": "cd backend && npm ci --no-audit --no-fund || true"
+  }
+}
