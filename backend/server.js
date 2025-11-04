@@ -36,6 +36,11 @@ app.get('/', (req, res) => {
   res.json({ message: 'Digital Banking API is running...' });
 });
 
+// Simple health-check endpoint for Render or uptime monitors
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', uptime: process.uptime() });
+});
+
 // Light rate limits on sensitive routes
 app.use('/api/auth', rateLimiter({ key: 'auth', windowMs: 60_000, max: 20 }), authRoutes);
 app.use('/api/users', userRoutes);
