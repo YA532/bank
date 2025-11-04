@@ -10,6 +10,10 @@ Frontend (Static Site)
 - Environment variables (Render Dashboard → Environment):
   - VITE_API_URL = https://<your-backend-service>.onrender.com
 
+Note about VITE_API_URL
+- The frontend will read `VITE_API_URL` and automatically append `/api` when making requests.
+  So set `VITE_API_URL` to your backend base URL (for example `https://my-backend.onrender.com`) — do not include `/api` at the end. The client will call `https://my-backend.onrender.com/api/...`.
+
 Notes:
 - Vite exposes client env variables via `import.meta.env.VITE_*`. Set `VITE_API_URL` on Render so the built client can call your deployed backend.
 - Ensure `frontend/public/vite.svg` exists to avoid a 404 for that asset.
