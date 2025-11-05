@@ -14,6 +14,16 @@ import adminRoutes from './routes/adminRoutes.js';
 // Load env vars
 dotenv.config();
 
+// Basic environment validation
+if (!process.env.MONGO_URI) {
+  console.error('FATAL: MONGO_URI is not set. Please set the MONGO_URI environment variable.');
+  process.exit(1);
+}
+if (!process.env.JWT_SECRET) {
+  console.error('FATAL: JWT_SECRET is not set. Please set the JWT_SECRET environment variable.');
+  process.exit(1);
+}
+
 // Connect to database
 connectDB();
 

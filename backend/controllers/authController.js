@@ -5,7 +5,7 @@ import { generateToken } from '../utils/generateToken.js';
 // @desc    Register new user
 // @route   POST /api/auth/register
 // @access  Public
-export const register = async (req, res) => {
+export const register = async (req, res, next) => {
   try {
     const name = (req.body.name || '').trim();
     const email = (req.body.email || '').trim().toLowerCase();
@@ -58,14 +58,15 @@ export const register = async (req, res) => {
       res.status(400).json({ message: 'Invalid user data' });
     }
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error('Register error:', error);
+    return next(error);
   }
 };
 
 // @desc    Authenticate user & get token
 // @route   POST /api/auth/login
 // @access  Public
-export const login = async (req, res) => {
+export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
@@ -85,18 +86,20 @@ export const login = async (req, res) => {
       res.status(401).json({ message: 'Invalid email or password' });
     }
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error('Login error:', error);
+    return next(error);
   }
 };
 
 // @desc    Get user profile
 // @route   GET /api/auth/me
 // @access  Private
-export const getMe = async (req, res) => {
+export const getMe = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id).populate('accounts');
     res.json(user);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error('GetMe error:', error);
+    return next(error);
   }
 };
